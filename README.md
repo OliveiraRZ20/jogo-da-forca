@@ -1,121 +1,151 @@
-## Jogo da Forca (CLI) 🎯
+# 🧱 Jogo da Forca — Versão Final (Branch Main)
 
-Um clássico jogo da forca para o terminal, escrito em Python, com arte ASCII, cores no console e uma lista de palavras em português.
-
-Este projeto é ideal para praticar Python básico (laços, listas, condicionais, I/O) e brincar no terminal. Ele roda nativamente no Windows (usa `cls` e `pause`).
-
----
-
-### Recursos
-
-- Arte ASCII do boneco em 7 estágios conforme os erros
-- Mensagens coloridas (sucesso/aviso/erro) no terminal
-- Validação de entrada (só aceita caracteres alfabéticos)
-- Palavras em português prontas para uso e fáceis de expandir
-- Interface simples e direta, toda no terminal
+Este é o **Jogo da Forca em sua versão final e modularizada**, resultado da evolução de várias iterações anteriores do projeto.  
+Aqui, o código atinge **maturidade estrutural e técnica**, adotando um design **limpo, extensível e orientado a boas práticas de desenvolvimento em Python**.
 
 ---
 
-### Requisitos
+## ⚙️ Estrutura e Tecnologias Utilizadas
 
-- Python 3.9 ou superior (usa anotações de tipo modernas como `list[str]`)
-- Windows (cmd.exe) — por padrão, o projeto usa `cls` e `pause` do Windows
+### 🧠 **Conceitos de Programação**
+- Programação **Orientada a Objetos (POO)** aplicada de forma modular.
+- **Encapsulamento** de responsabilidades por arquivos e classes.
+- **Funções e métodos bem definidos**, cada um com papel claro e documentado.
+- **Manipulação de listas e strings** para representar o estado do jogo.
+- **Controle de fluxo robusto**, garantindo uma experiência fluida no terminal.
 
-Observação sobre cores: as cores ANSI funcionam bem no Windows 10/11 (cmd, PowerShell e Windows Terminal). Se as cores não aparecerem, experimente rodar no Windows Terminal ou PowerShell.
+### 🧩 **Aspectos Técnicos**
+- Arquitetura **modular** com pastas organizadas e separação de responsabilidades:
+  - `Game.py` → Lógica central do jogo (classe principal).
+  - `hangman.py` → Controle e exibição do desenho ASCII da forca.
+  - `terminal.py` → Utilitários para o terminal (limpeza, pausa e mensagens coloridas).
+  - `palavras.py` → Banco de palavras.
+- **Entrada e saída otimizadas** com tratamento de erros e mensagens contextuais.
+- Uso de **códigos ANSI** para colorir mensagens no terminal.
+- Dependências exclusivamente **da biblioteca padrão do Python**.
+
+### 🧮 **Conceitos de Software e Boas Práticas**
+- Separação clara de **camadas**:
+  - Interface de usuário (terminal)
+  - Lógica de negócio (classe `Game`)
+  - Dados (lista de palavras)
+- Aplicação de **Single Responsibility Principle** — cada módulo tem um propósito único.
+- Código **limpo e legível**, com tipagem explícita (`list[str]`, `str`, `bool`).
+- Estrutura de **loop principal controlado** via `main.py` com inicialização protegida:
+  ```python
+  if __name__ == '__main__':
+      main()
+  ```
+- **.gitignore** configurado para manter o repositório limpo de arquivos temporários e compilados.
 
 ---
 
-### Como executar (Windows)
+## 🕹️ Descrição do Jogo
 
-No prompt de comando (cmd):
+O jogo segue o mesmo espírito do clássico **Hangman (Forca)**:  
+O jogador tenta adivinhar uma palavra oculta, errando o mínimo possível antes que a forca seja completada.
 
-```bat
-cd caminho\para\jogo-da-forca
-python --version
+- Cada tentativa exibe a **situação atual da forca**, as **letras descobertas** e as **tentativas erradas**.  
+- É possível **chutar uma letra ou a palavra inteira**.  
+- Feedback visual e colorido guia o jogador durante o processo.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+.
+├── .gitignore
+├── main.py
+└── src/
+    ├── Game.py
+    ├── hangman.py
+    ├── palavras.py
+    └── terminal.py
+```
+
+### 🧱 Descrição dos Módulos
+
+- **main.py**  
+  Controla o fluxo principal do jogo. Importa a classe `Game` e executa o loop principal com limpeza e pausa entre tentativas.
+
+- **src/Game.py**  
+  Contém a classe `Game`, responsável por toda a lógica: escolha da palavra, controle de erros, validação de tentativas e mensagens.
+
+- **src/hangman.py**  
+  Armazena os desenhos ASCII da forca e a função `get_hangman_pose()` para exibir o estágio atual do boneco.
+
+- **src/palavras.py**  
+  Banco de palavras que o jogo utiliza para gerar o desafio.
+
+- **src/terminal.py**  
+  Utilitários de terminal: funções de limpar tela (`cls`), pausar (`pause`) e imprimir mensagens coloridas (`alertar`, `informar`, `confirmar`).
+
+---
+
+## 🧑‍💻 Execução
+
+Para rodar o jogo, basta executar o arquivo principal:
+
+```bash
 python main.py
 ```
 
-Se você tiver múltiplas versões de Python instaladas, talvez precise usar `py -3.11 main.py` ou similar.
+O jogo será executado diretamente no terminal.  
+Compatível com **Windows, macOS e Linux** (embora o `pause` e `cls` tenham comportamento otimizado para Windows).
 
 ---
 
-### Como jogar
-
-1. O jogo sorteia uma palavra secreta em português.
-2. Você pode chutar uma letra por vez ou arriscar a palavra inteira.
-3. Cada erro desenha uma parte do boneco (máximo de 6 erros). No 7º estágio, o jogo termina.
-4. Você vence ao descobrir todas as letras ou acertar a palavra inteira.
-
-Exemplo de sessão:
+## 💬 Exemplo de Interação
 
 ```
-		+---------+
-		|         |
-		|         
-		|
-		|
-		|
-		|
-		|
-		|
++---------+
+|         |
+|         O
+|        /|\
+|        / \
+|
+|
+|
+|
 ====================
 Palavra oculta: _ _ _ _ _
-Tentativas erradas: 
+Tentativas erradas: a, e
+
 Faça sua tentativa:
-> a
-[SUCESSO] Parabéns, a palavra oculta contém a letra a, continue assim!
+> o
+[SUCESSO] Parabéns, a palavra oculta contém a letra 'o', continue assim!
 ```
 
 ---
 
-### Estrutura do projeto
+## 🌱 Evolução do Projeto
 
-```
-├─ main.py                # Ponto de entrada do jogo
-├─ testes.ipynb           # Notebook auxiliar (opcional)
-├─ src/
-│  ├─ Game.py             # Lógica principal do jogo (estado, tentativas, fim)
-│  ├─ hangman.py          # Arte ASCII e função get_hangman_pose
-│  ├─ palavras.py         # Lista de palavras em português
-│  └─ terminal.py         # Utilitários de terminal (cls, pause, cores e mensagens)
-```
+Este projeto é o resultado de uma **linha evolutiva** que passou por diferentes versões:  
+Cada uma explorou novos conceitos e melhorias, culminando nesta versão modular final.
 
-Principais pontos do código:
+- 🪓 **Versão 1** — Protótipo procedural básico.  
+- 🎨 **Versão 2** — Adição de arte ASCII e modularização funcional.  
+- 🧠 **Versão 3** — Reescrita em POO, estruturando o jogo em classes e métodos.  
 
-- `Game`: controla palavra alvo, letras descobertas, erros e fluxo do jogo.
-- `hangman.get_hangman_pose(erros)`: retorna a arte ASCII conforme a contagem de erros.
-- `palavras.palavras`: lista de palavras usadas no sorteio.
-- `terminal`: limpa a tela, pausa, e exibe mensagens coloridas (info/erro/sucesso).
+Essas versões estão disponíveis em **outras branches do repositório**, e vale a pena visitá-las para ver o processo de aprendizado e refatoração que levou até aqui.
 
 ---
 
-### Personalização
+## ✨ Conclusão
 
-- Adicionar palavras: edite `src/palavras.py` e inclua novos itens na lista `palavras`.
-- Alterar a arte/estágios: ajuste `hangmanPoses` em `src/hangman.py`.
-- Número de erros: atualmente o limite efetivo é 6 erros (há 7 poses). Se quiser mudar o limite, atualize:
-	- a quantidade de poses em `hangmanPoses` e
-	- a checagem em `Game.checar_finalizacao()` (condição que compara `self.erros`).
-- Mensagens e cores: personalize `mensagem_colorida` e helpers em `src/terminal.py`.
+Esta versão representa a consolidação de:
+- **Boas práticas de programação Python**  
+- **Organização modular e escalável**  
+- **Evolução prática de um projeto real**  
 
----
-
-### Portabilidade (Linux/macOS)
-
-O projeto está configurado para Windows por padrão (`cls`, `pause`). Para portar:
-
-- Troque `system("cls")` por `system("clear")` em `src/terminal.py`.
-- Substitua `system("pause")` por uma pausa equivalente (por exemplo, `input("Pressione Enter para continuar...")`).
+Explore as **outras branches** do repositório para acompanhar o crescimento técnico do projeto e entender a transição entre versões.  
+Cada uma delas mostra uma etapa da jornada — da simplicidade à estrutura profissional.
 
 ---
 
-### Próximos passos (ideias)
-
-- Dificuldades (fácil/médio/difícil) variando o número de erros
-- Histórico de partidas e pontuação
-- Dicas (ex: primeira e última letra)
-- Testes automatizados (pytest) para a lógica do `Game`
+**Desenvolvido por [Lucca]**  
+Estudante de Engenharia da Computação | Analista de Dados  
+Explorando Python, modularização e boas práticas de desenvolvimento.
 
 ---
-
-Made with ❤️ em Python — por OliveiraRZ20
