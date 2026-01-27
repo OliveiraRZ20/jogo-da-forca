@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "jogo_da_forca"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
